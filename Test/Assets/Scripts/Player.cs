@@ -14,7 +14,7 @@ public abstract class Player : MonoBehaviour
     PLAYER playerNr;
 
     bool hisTurn;
-    public bool HisTurn { get { return hisTurn; } set { hisTurn = value; ChooseTile(); } }
+    public bool HisTurn { get { return hisTurn; } set { hisTurn = value; if(hisTurn) ChooseTile(); } }
 
     protected abstract void ChooseTile();
 

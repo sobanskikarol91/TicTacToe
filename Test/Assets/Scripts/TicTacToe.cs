@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class TicTacToe : MonoBehaviour
 {
@@ -14,30 +14,21 @@ public class TicTacToe : MonoBehaviour
     {
         for (int i = 0; i < length; i++)
             if (CheckColumn(i, nr))
-            {
                 return true;
-            }
 
         return false;
     }
 
     bool CheckColumn(int col, PLAYER nr)
     {
-
-        return (tc[0 + col].PlayerNr == nr &&
-    tc[3 + col].PlayerNr == nr &&
-     tc[6 + col].PlayerNr == nr);
-
+        return (tc[0 + col].PlayerNr == nr && tc[3 + col].PlayerNr == nr && tc[6 + col].PlayerNr == nr);
     }
 
     bool CheckRows(PLAYER nr)
     {
         for (int i = 0; i < length; i++)
             if (CheckRow(i, nr))
-            {
                 return true;
-            }
-
 
         return false;
     }
@@ -76,5 +67,18 @@ public class TicTacToe : MonoBehaviour
 
         foreach (TileController t in tc)
             t.Restart();
+    }
+
+    public List<TileController> ReturnNotUsedTitles()
+    {
+        List<TileController> notUsedTiles = new List<TileController>();
+
+        foreach (var notUsed in tc)
+        {
+            if (notUsed.IsChoosen == false)
+                notUsedTiles.Add(notUsed);
+        }
+
+        return notUsedTiles;
     }
 }

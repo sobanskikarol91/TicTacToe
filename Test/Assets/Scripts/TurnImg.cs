@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 public class TurnImg : MonoBehaviour
 {
-    [SerializeField]
-    Text text;
+
+    [SerializeField]   Text text;
     string turnTxt = "Turn: ";
 
     public void UpdateText(PLAYER currentPlayer)

@@ -5,24 +5,29 @@ using UnityEngine.UI;
 public class TileController : MonoBehaviour
 {
     Image image;
-    bool isChoosen;
+    public bool IsChoosen { get; private set; }
 
     public Sprite defaultSprite;
     public PLAYER PlayerNr { get; set; }
 
-    private void Start()
+    private void Awake()
     {
         PlayerNr = PLAYER.NONE;
         image = GetComponent<Image>();
     }
 
+
+    public void HumanClickTile()
+    {
+        if (GameManager.instance.isHumanTurn())
+            PlayerChoseTile();
+    }
+
     public void PlayerChoseTile()
     {
-        if (isChoosen) return;
-
-        isChoosen = true;
+        if (IsChoosen) return;
+        IsChoosen = true;
         Player player = GameManager.instance.CurrentPlayer;
-
         image.sprite = player.GetPlayerSprite();
         PlayerNr = player.GetPlayerNr();
 
@@ -32,7 +37,7 @@ public class TileController : MonoBehaviour
     public void Restart()
     {
         image.sprite = defaultSprite;
-        isChoosen = false;
+        IsChoosen = false;
         PlayerNr = PLAYER.NONE;
     }
 }

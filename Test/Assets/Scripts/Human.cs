@@ -5,6 +5,6 @@ public class Human : Player
 {
     protected override void ChooseTile()
     {
-
+        // OnClickButton Event
     }
 }

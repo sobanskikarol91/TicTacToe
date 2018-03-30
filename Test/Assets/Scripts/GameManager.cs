@@ -1,15 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Linq;
 
 [RequireComponent(typeof(GameSettings), typeof(TicTacToe))]
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    GameSettings gameSettings;
 
-   
-   public TicTacToe TicTacToe { get; private set; }
+    public TicTacToe TicTacToe { get; private set; }
     Player[] players;
     MenuManager menuManager;
     public Player CurrentPlayer { get; private set; }
@@ -27,7 +24,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         TicTacToe = GetComponent<TicTacToe>();
-        gameSettings = GetComponent<GameSettings>();
         menuManager = GetComponent<MenuManager>();
         StartGame();
     }
@@ -38,7 +34,6 @@ public class GameManager : MonoBehaviour
         ChooseFirstPlayer();
         UpdateTurnImg();
     }
-
 
     void GetPlayers()
     {
@@ -51,13 +46,13 @@ public class GameManager : MonoBehaviour
     void ChooseFirstPlayer()
     {
         int nr = Random.Range(0, players.Length);
-        players[nr].HisTurn = true;
         CurrentPlayer = players[nr];
+        players[nr].HisTurn = true;
     }
 
     bool IsGameOver()
     {
-        return players.Any(t => t.Points > gameSettings.maxPoints);
+        return players.Any(t => t.Points > GameSettings.instance.maxPoints);
     }
 
     public void UpdateTurnImg()
@@ -67,11 +62,14 @@ public class GameManager : MonoBehaviour
 
     public void ChangePlayers()
     {
+        CurrentPlayer.HisTurn = false;
+
         if (CurrentPlayer.GetPlayerNr() == players[0].GetPlayerNr())
             CurrentPlayer = players[1];
         else
             CurrentPlayer = players[0];
 
+        CurrentPlayer.HisTurn = true;
         UpdateTurnImg();
     }
 
@@ -84,7 +82,6 @@ public class GameManager : MonoBehaviour
             case TTT_STATES.NONE:
                 {
                     ChangePlayers();
-
                     break;
                 }
             case TTT_STATES.WIN:
@@ -105,5 +102,10 @@ public class GameManager : MonoBehaviour
     {
         TicTacToe.Restart();
         StartGame();
+    }
+
+    public bool isHumanTurn()
+    {
+        return CurrentPlayer.GetPlayerNr() == PLAYER.P;
     }
 }
